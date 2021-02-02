@@ -10,6 +10,6 @@ app.post('/api/characters', ctrl.addCharacter)
 app.put('/api/characters/:id', ctrl.updateCharacter)
 app.delete('/api/characters/:id', ctrl.deleteCharacter)
 
-const port = 9000
+const port = 4000
 
 app.listen(port, () => console.log(`Listening on port ${port}`))
