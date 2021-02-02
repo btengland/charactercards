@@ -36,8 +36,9 @@ class App extends Component {
         .catch( err => console.log(err))
     }
 
-    updateCharacter = (id, name, attackPoints) => {
-        axios.put(`/api/characters/${id}`, {name, attackPoints})
+    updateCharacter = (id) => {
+        let character = this.state.characters[this.state.characters.findIndex(c => c.id === id)]
+        axios.put(`/api/characters/${id}`, {character})
         .then(res => {
             this.setState({
                 characters: res.data
@@ -47,7 +48,7 @@ class App extends Component {
     }
 
     deleteCharacter = id => {
-        axios.delete(`/api/character/${id}`)
+        axios.delete(`/api/characters/${id}`)
         .then (res => {
             this.setState({
                 characters: res.data
@@ -56,16 +57,53 @@ class App extends Component {
         .catch( err => console.log(err))
     }
 
+    changeHP = (id, change) => {
+        let index = this.state.characters.findIndex(c => c.id === id)
+        let character = this.state.characters[index]
+        let copyCharacters = this.state.characters.slice()
+        character.healthPoints += change
+        copyCharacters.splice(index, 1, character)
+        this.setState({
+            characters: copyCharacters
+        })
+    }
+
+    changeName = (id, val) => {
+        let index = this.state.characters.findIndex(c => c.id === id)
+        let character = this.state.characters[index]
+        let copyCharacters = this.state.characters.slice()
+        character.name = val
+        copyCharacters.splice(index, 1, character)
+        this.setState({
+            characters: copyCharacters
+        })
+    }
+
+    changeAttack = (id, val) => {
+        let index = this.state.characters.findIndex(c => c.id === id)
+        let character = this.state.characters[index]
+        let copyCharacters = this.state.characters.slice()
+        character.attackPoints = val
+        copyCharacters.splice(index, 1, character)
+        this.setState({
+            characters: copyCharacters
+        })
+    }
+
     render() {
         const mappedCharacters = this.state.characters.map( character => {
         return <Character key={character.id}
                 character={character}
                 updateCharacter={this.updateCharacter}
-                deleteCharacter={this.deleteCharacter}/>
+                deleteCharacter={this.deleteCharacter}
+                changeHP={this.changeHP}
+                changeAttack={this.changeAttack}
+                changeName={this.changeName}/>
         }) 
-        return <div>
-            <div>{mappedCharacters}</div>
-            <div><Text addCharacter={this.addCharacter}/></div>
+        return <div className='body'>
+            <div className='container'>{mappedCharacters}</div>
+            <div><Text
+            addCharacter={this.addCharacter}/></div>
         </div>
     }
 }

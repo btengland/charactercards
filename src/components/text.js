@@ -19,23 +19,31 @@ class Text extends Component {
 
    handleAttackPoints = e => {
     this.setState({
-        attackPoints: e.target.value
-    })
+            attackPoints: e.target.value
+        })
     }
 
+    handleAddCharacter = e => {
+        this.props.addCharacter(this.state.name, +this.state.attackPoints)
+        this.setState({
+            name: '',
+            attackPoints: '' 
+        }) 
+    }
 
     render(){
         return(
-            <div>
-                <p>Name:</p><input onChange={(e) => this.handleName(e)}
+            <div className='text-container'>
+                <div className='createcharacter'>Name:<input onChange={(e) => this.handleName(e)}
                 value={this.state.name}
                 placeholder='Type Here'
-                type='text'/>
-                <TextButtons addCharacter={this.props.addCharacter}/>
-                <p>Attack Points:</p><input onChange={(e) => this.handleName(e)}
+                type='text'/></div>
+                <div className='createcharacter'>
+                Attack Points:<input onChange={(e) => this.handleAttackPoints(e)}
                 value={this.state.attackPoints}
                 placeholder='Type Here'
-                type='text'/>
+                type='text'/></div>
+                <div className='createcharacter'><TextButtons handleAddCharacter={this.handleAddCharacter}/></div>
             </div>
         )
     }

@@ -1,9 +1,4 @@
-const characters = [{
-    id: 0,
-    name: 'Richard',
-    attackPoints: 50,
-    healthPoints: 0,
-}]
+const characters = []
 
 let id = 1
 
@@ -19,14 +14,15 @@ module.exports = {
         res.status(200).send(characters)
     },
     updateCharacter: (req, res) => {
-        const {name, attackPoints} = req.body
+        const {name, attackPoints} = req.body.character
         const i = characters.findIndex( characters => characters.id === +req.params.id)
         let character = characters[i]
 
         characters[i] = {
             id: character.id,
             name: name || character.name,
-            attackPoints: attackPoints || character.attackPoints
+            attackPoints: +attackPoints || character.attackPoints,
+            healthPoints: character.healthPoints
         }
 
         res.status(200).send(characters)

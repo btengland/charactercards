@@ -1,9 +1,9 @@
 import React from 'react'
 import '../App.css'
 
-const TextButtons = () => {
+const TextButtons = (props) => {
     return <div>
-        <button type='submit'> Add New Character</button>
+        <button onClick={(e) => props.handleAddCharacter(e)}> Add New Character</button>
     </div>
 }
 
