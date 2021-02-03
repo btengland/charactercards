@@ -24,27 +24,33 @@ class Text extends Component {
     }
 
     handleAddCharacter = e => {
-        this.props.addCharacter(this.state.name, +this.state.attackPoints)
+        this.props.addCharacter(this.state.name, +this.state.attackPoints, this.randomInverval())
         this.setState({
             name: '',
             attackPoints: '' 
         }) 
     }
 
+    randomInverval= () => { 
+        let randomNumber = Math.floor(Math.random() * this.props.images.length)
+        return this.props.images[randomNumber]
+    }
+
     render(){
+        const {name, attackPoints} = this.state
         return(
-            <div className='text-container'>
-                <div className='createcharacter'>Name:<input onChange={(e) => this.handleName(e)}
-                value={this.state.name}
+            <footer className='text-container'>
+                <div className='createcharacter'>Name: <input onChange={(e) => this.handleName(e)}
+                value={name}
                 placeholder='Type Here'
                 type='text'/></div>
                 <div className='createcharacter'>
-                Attack Points:<input onChange={(e) => this.handleAttackPoints(e)}
-                value={this.state.attackPoints}
+                Attack Points: <input onChange={(e) => this.handleAttackPoints(e)}
+                value={attackPoints}
                 placeholder='Type Here'
                 type='text'/></div>
                 <div className='createcharacter'><TextButtons handleAddCharacter={this.handleAddCharacter}/></div>
-            </div>
+            </footer>
         )
     }
 }

@@ -29,7 +29,7 @@ class Character extends Component {
     }
 
     render(){
-        const {name, healthPoints, attackPoints, id} = this.props.character
+        const {name, healthPoints, attackPoints, id, interval} = this.props.character
         return(
             <div className='all'>
                 <div className='character'>
@@ -38,7 +38,7 @@ class Character extends Component {
                         <button className='hpbutton' onClick={e => this.decreaseHP()}>-</button>
                         {healthPoints}
                         <button className='hpbutton' onClick={e => this.increaseHP()}>+</button></p>
-                    <img className="picture" src='https://source.unsplash.com/random' alt='Character'/>
+                    <img className="picture" src={interval} alt='Character'/>
                     <p>Attack Points: <input onChange={e => this.props.changeAttack(id, e.target.value)} type='number' value={attackPoints}/></p>
                 </div>
                 <CharacterButtons handleEdit={this.handleEdit}

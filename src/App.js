@@ -9,11 +9,43 @@ class App extends Component {
         super()
         this.state = {
             characters: [],
+            searchTerm: '',
+            images: []
         }
     }
 
     componentDidMount(){
         this.readCharacters()
+        this.readImages()
+    }
+
+    readImages = () => {
+        axios.get('/api/images')
+        .then(res => {
+            this.setState({
+                images: res.data
+            })
+        })
+        .catch(err => console.log(err))
+    }
+
+    updateSearchTerm = e => {
+        this.setState({
+            searchTerm: e.target.value
+        }, () => {
+            setTimeout(() => {
+                if(this.state.searchTerm.trim()){
+                    axios.get(`/api/characters?searchTerm=${this.state.searchTerm}`)
+                    .then(res => {
+                        this.setState({
+                            characters: res.data
+                        })
+                    })
+                } else {
+                    this.readCharacters()
+                }
+            }, 2000)
+        })
     }
 
     readCharacters = () => {
@@ -26,8 +58,8 @@ class App extends Component {
         .catch( err => console.log(err))
     }
 
-    addCharacter = (name, attackPoints) => {
-        axios.post('/api/characters', {name, attackPoints})
+    addCharacter = (name, attackPoints, interval) => {
+        axios.post('/api/characters', {name, attackPoints, interval})
         .then(res => {
             this.setState({
                 characters: res.data
@@ -100,11 +132,12 @@ class App extends Component {
                 changeAttack={this.changeAttack}
                 changeName={this.changeName}/>
         }) 
-        return <div className='body'>
+        return <main className='body'>
+            <p className='searchname'>Search Character: </p><input className='search' placeholder='Search Characters' onChange={this.updateSearchTerm}/>
             <div className='container'>{mappedCharacters}</div>
-            <div><Text
+            <div><Text images={this.state.images}
             addCharacter={this.addCharacter}/></div>
-        </div>
+        </main>
     }
 }
 

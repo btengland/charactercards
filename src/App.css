@@ -1,6 +1,8 @@
 *{
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 html{
@@ -28,7 +30,7 @@ html{
 
 .picture {
   width: 150px;
-  height: 200px;
+  height: 180px;
   margin: 10px;
 }
 
@@ -43,7 +45,7 @@ html{
 }
 
 .all {
-  border: 5px solid #C4C4C4;
+  border: 10px solid #C4C4C4;
 }
 
 .hpbutton {
@@ -67,3 +69,11 @@ html{
   margin: 20px;
 }
 
+.search {
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.searchname {
+  margin-left: 11px;
+}

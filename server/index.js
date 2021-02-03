@@ -1,10 +1,12 @@
 const express = require('express')
 const ctrl = require('./controller.js')
+const imageCtrl = require('./images.js')
 
 const app = express ()
 
 app.use(express.json())
 
+app.get('/api/images', imageCtrl.readImages)
 app.get('/api/characters', ctrl.readCharacters)
 app.post('/api/characters', ctrl.addCharacter)
 app.put('/api/characters/:id', ctrl.updateCharacter)

@@ -4,11 +4,19 @@ let id = 1
 
 module.exports = {
     readCharacters: (req, res) => {
-        res.status(200).send(characters)
+        if(req.query.searchTerm){
+            console.log(req.query.searchTerm)
+            let filteredCharacters = characters.filter(char => {
+                return char.name.toLowerCase().includes(req.query.searchTerm.toLowerCase())
+            })
+            res.status(200).send(filteredCharacters)
+        } else {
+            res.status(200).send(characters)
+        }
     },
     addCharacter: (req, res) => {
-        const {name, attackPoints} = req.body
-        const newCharacter = {id, name, attackPoints, healthPoints: 0}
+        const {name, attackPoints, interval} = req.body
+        const newCharacter = {id, name, attackPoints, healthPoints: 0, interval}
         characters.push(newCharacter)
         id++
         res.status(200).send(characters)
@@ -22,7 +30,8 @@ module.exports = {
             id: character.id,
             name: name || character.name,
             attackPoints: +attackPoints || character.attackPoints,
-            healthPoints: character.healthPoints
+            healthPoints: character.healthPoints,
+            interval: character.interval
         }
 
         res.status(200).send(characters)
