@@ -3,8 +3,13 @@
   padding: 0;
 }
 
-.body{
+html{
   background-color: #C4C4C4;
+}
+
+.body{
+  height: 100vh;
+  width: 100vw;
   padding: 30px;
   box-sizing: border-box;
   flex-wrap: wrap;
